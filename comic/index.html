@@ -1,0 +1,262 @@
+<title>Хината и Цукико</title>
+<meta name="description" content="Пиксельная манхва по истории «Хината и Цукико».">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0c0a16;
+  --bg2: #15121f;
+  --text: #ece8f6;
+  --dim: #9a93b4;
+  --line: #2c2644;
+  --sun: #ffab5c;
+  --moon: #b9a8ff;
+  --bubble: #fffdf8;
+  --bubble-ink: #17131f;
+  --cap-day: #fff3dc;
+  --cap-night: rgba(18, 14, 34, .92);
+  --pixel: "Pixelify Sans", "Courier New", monospace;
+  --read: Rubik, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --col: min(100vw, 560px);
+  --fs: clamp(13px, 3.6vw, 16px);
+}
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--read); -webkit-text-size-adjust: 100%; }
+#top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+  background: rgba(12, 10, 22, .9); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+#top h1 { margin: 0; font: 600 18px/1 var(--pixel); letter-spacing: .02em; white-space: nowrap; }
+#top h1 .a { color: var(--sun); } #top h1 .b { color: var(--moon); }
+#chapters { display: flex; gap: 6px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+#chapters::-webkit-scrollbar { display: none; }
+#chapters button {
+  font: 600 14px/1 var(--pixel); color: var(--dim); background: transparent; border: 1px solid var(--line);
+  border-radius: 8px; padding: 8px 10px; cursor: pointer; white-space: nowrap;
+}
+#chapters button[aria-current="true"] { color: #140f1f; background: var(--moon); border-color: var(--moon); }
+#chapters button:disabled { opacity: .35; cursor: default; }
+button:focus-visible { outline: 2px solid var(--sun); outline-offset: 2px; }
+#bar { position: fixed; left: 0; top: 0; height: 2px; width: 0; background: linear-gradient(90deg, var(--sun), var(--moon)); z-index: 11; }
+
+#strip { width: var(--col); margin: 0 auto; padding: 0 0 40px; }
+.card {
+  box-sizing: border-box; padding: 34px 20px 26px; text-align: center;
+  font-family: var(--pixel); color: var(--text);
+}
+.card .kicker { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+.card .title { margin-top: 8px; font-size: 26px; line-height: 1.15; text-wrap: balance; }
+.card.scene .title { font-size: 21px; color: var(--sun); }
+.card.end p { font-family: var(--read); color: var(--dim); font-size: 15px; line-height: 1.5; max-width: 32ch; margin: 10px auto 18px; }
+.card .go { font: 600 16px/1 var(--pixel); color: #140f1f; background: var(--sun); border: 0; border-radius: 10px; padding: 12px 18px; cursor: pointer; }
+
+figure.pn { position: relative; margin: 0 auto 10px; width: calc(var(--col) * var(--w, 1)); }
+figure.pn[data-align="l"] { margin-left: 0; } figure.pn[data-align="r"] { margin-right: 0; }
+figure.pn canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; image-rendering: crisp-edges; background: #120f1c; }
+figure.pn.frame canvas { box-shadow: 0 0 0 2px #05040a; }
+.ov { position: absolute; inset: 0; pointer-events: none; }
+.ov svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.t { position: absolute; box-sizing: border-box; font-size: var(--fs); line-height: 1.28; }
+.say, .shout, .whisper, .think {
+  background: var(--bubble); color: var(--bubble-ink); border: 2px solid var(--bubble-ink);
+  border-radius: 1.2em; padding: .45em .75em; text-align: center; text-wrap: balance;
+}
+.shout { font-weight: 700; border-radius: .5em; border-width: 3px; letter-spacing: .01em; }
+.whisper { border-style: dashed; font-size: calc(var(--fs) * .92); }
+.think { border-radius: 2em; font-style: italic; background: #f3f0ff; border-color: #5a4e8a; color: #2a2346; }
+.cap {
+  background: var(--cap-night); color: #f4f0ff; border-left: 3px solid var(--sun);
+  padding: .5em .7em; font-size: calc(var(--fs) * .95); text-align: left; border-radius: 3px;
+}
+.cap.day { background: var(--cap-day); color: #2b2016; border-left-color: #d9732a; }
+.cap.moon { border-left-color: var(--moon); }
+.sfx { font: 700 calc(var(--fs) * 2) / 1 var(--pixel); color: #fff; letter-spacing: .02em; white-space: nowrap;
+  text-shadow: 2px 0 #140f1f, -2px 0 #140f1f, 0 2px #140f1f, 0 -2px #140f1f, 2px 2px #140f1f, -2px -2px #140f1f, 2px -2px #140f1f, -2px 2px #140f1f; }
+.time { font: 600 calc(var(--fs) * .95) / 1 var(--pixel); color: #fff; background: #140f1f; border: 1px solid var(--moon); padding: .3em .5em; border-radius: 4px; letter-spacing: .06em; }
+.phone { background: #fff; color: #1d1a26; border-radius: .6em; padding: .45em .6em; font-size: calc(var(--fs) * .9); text-align: left; box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+.phone b { display: block; font-size: .78em; color: #7a708e; font-weight: 500; margin-bottom: .15em; }
+.sign { font: 600 calc(var(--fs) * .7) / 1.1 var(--pixel); color: #1a1a1a; text-align: center; }
+.sign.light { color: #fff; }
+.t .who { display: block; font: 600 .72em/1 var(--pixel); color: var(--c, #8a7aa0); margin-bottom: .25em; letter-spacing: .04em; }
+@media (prefers-reduced-motion: no-preference) { .t { transition: opacity .3s ease; } }
+</style>
+
+<div id="bar"></div>
+<header id="top">
+  <h1><span class="a">Хината</span> и <span class="b">Цукико</span></h1>
+  <nav id="chapters" aria-label="Главы"></nav>
+</header>
+<main id="strip" aria-live="polite"></main>
+
+<script src="engine.js"></script>
+<script src="ch1.js"></script>
+<script>
+(() => {
+'use strict';
+const C = window.COMIC, strip = document.getElementById('strip'), nav = document.getElementById('chapters');
+const NAMES = { hinata: ['Хината', '#ffab5c'], tsukiko: ['Цукико', '#b9a8ff'], aoi: ['Аой', '#7fd8c4'], rin: ['Рин', '#ff8ab8'], kaito: ['Кайто', '#8ab4ff'], mom: ['Мама', '#e0c8a0'], seiji: ['Сэйдзи', '#a8c48a'], father: ['Отец', '#c8b8a8'] };
+const MAXN = 5;
+let current = 0, io = null;
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function buildNav() {
+  nav.textContent = '';
+  for (let n = 1; n <= MAXN; n++) {
+    const b = el('button', null, 'Гл. ' + n);
+    b.type = 'button';
+    b.disabled = !C.chapters[n];
+    b.setAttribute('aria-current', String(n === current));
+    b.addEventListener('click', () => open(n, true));
+    nav.appendChild(b);
+  }
+}
+
+function textEl(t, p, W) {
+  const kind = t.t || 'say', e = el('div', 't ' + kind);
+  if (t.cls) e.className += ' ' + t.cls;
+  if (kind === 'phone') { const w = el('b', null, t.who || ''); e.appendChild(w); e.appendChild(document.createTextNode(t.s)); }
+  else if (t.name && NAMES[t.who]) { const w = el('span', 'who', NAMES[t.who][0]); w.style.setProperty('--c', NAMES[t.who][1]); e.appendChild(w); e.appendChild(document.createTextNode(t.s)); }
+  else e.textContent = t.s;
+  const H = p.h;
+  let [x, y] = Array.isArray(t.at) ? t.at : [W / 2, H * .18];
+  e._at = [x, y]; e._t = t;
+  e.style.left = (x / W * 100) + '%'; e.style.top = (y / H * 100) + '%';
+  const mw = t.mw || (kind === 'cap' ? 120 : kind === 'sfx' || kind === 'time' ? 400 : 104);
+  e.style.maxWidth = (mw / W * 100) + '%';
+  if (kind !== 'sfx' && kind !== 'time') e.style.width = 'max-content';
+  e.style.transform = `translate(${t.ax != null ? -t.ax * 100 : -50}%, ${t.ay != null ? -t.ay * 100 : -50}%)` + (t.rot ? ` rotate(${t.rot}deg)` : '');
+  if (kind === 'sfx' && t.c) e.style.color = t.c;
+  if (kind === 'sfx' && t.size) e.style.fontSize = `calc(var(--fs) * ${t.size})`;
+  return e;
+}
+
+function panelEl(p) {
+  const W = Math.round(C.PW * (p.w || 1));
+  const fig = el('figure', 'pn' + (p.frame === false ? '' : ' frame'));
+  fig.style.setProperty('--w', p.w || 1);
+  if (p.align) fig.dataset.align = p.align;
+  fig.style.marginBottom = (p.gap != null ? p.gap : 10) + 'px';
+  if (p.gapTop) fig.style.marginTop = p.gapTop + 'px';
+  const cv = el('canvas'); cv.width = W; cv.height = p.h;
+  cv.setAttribute('role', 'img');
+  cv.setAttribute('aria-label', (p.txt || []).map(t => t.s).filter(Boolean).join(' '));
+  fig.appendChild(cv);
+  const ov = el('div', 'ov');
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); ov.appendChild(svg);
+  for (const t of p.txt || []) ov.appendChild(textEl(t, p, W));
+  fig.appendChild(ov);
+  fig._p = p; fig._W = W; fig._cv = cv; fig._svg = svg;
+  return fig;
+}
+
+function paint(fig) {
+  if (fig._done) return;
+  fig._done = true;
+  try { C.renderPanel(fig._p).toCanvas(fig._cv); }
+  catch (err) { console.error(err); const x = fig._cv.getContext('2d'); x.fillStyle = '#3a1a2a'; x.fillRect(0, 0, fig._cv.width, fig._cv.height); }
+}
+
+/* keep bubbles inside the column and draw their tails toward the speaker */
+function layoutFig(fig) {
+  const p = fig._p, W = fig._W, box = fig.getBoundingClientRect(), k = box.width / W;
+  if (!k) return;
+  const svg = fig._svg; svg.textContent = '';
+  svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+  for (const e of fig.querySelectorAll('.t')) { e.style.marginLeft = ''; e.style.marginTop = ''; }
+  for (const e of fig.querySelectorAll('.t')) {
+    const t = e._t, r = e.getBoundingClientRect();
+    let dx = 0, dy = 0;
+    const sr = strip.getBoundingClientRect(), colL = sr.left + 4, colR = sr.right - 4;
+    if (r.left < colL) dx = colL - r.left; else if (r.right > colR) dx = colR - r.right;
+    if (!t.free) { if (r.bottom > box.bottom - 4) dy = box.bottom - 4 - r.bottom; if (r.top + dy < box.top + 4) dy = box.top + 4 - r.top; }
+    if (dx) e.style.marginLeft = dx + 'px';
+    if (dy) e.style.marginTop = dy + 'px';
+    const kind = t.t || 'say';
+    if (!/say|shout|whisper|think/.test(kind) || t.tail === false) continue;
+    const target = t.to || C.headOf(p, t.who);
+    if (!target) continue;
+    const rr = e.getBoundingClientRect();
+    const bx = rr.left - box.left, by = rr.top - box.top, bw = rr.width, bh = rr.height;
+    const tx = target[0] * k, ty = target[1] * k;
+    const cx = bx + bw / 2, cy = by + bh / 2;
+    if (tx > bx && tx < bx + bw && ty > by && ty < by + bh) continue;
+    const below = ty > by + bh, above = ty < by;
+    const ey = below ? by + bh : above ? by : cy;
+    const ex = below || above ? Math.min(Math.max(tx, bx + bh * .45 + 10), bx + bw - bh * .45 - 10) : (tx > cx ? bx + bw : bx);
+    const dist = Math.hypot(tx - ex, ty - ey), len = Math.min(Math.max(dist - 16, 10), 40);
+    const ux = (tx - ex) / (dist || 1), uy = (ty - ey) / (dist || 1);
+    const px = ex + ux * len, py = ey + uy * len, half = Math.max(6, bh * .16);
+    const nx = below || above ? 1 : 0, ny = below || above ? 0 : 1;
+    const inset = below ? -3 : above ? 3 : 0, insetx = below || above ? 0 : (tx > cx ? -3 : 3);
+    const a = [ex - nx * half + insetx, ey - ny * half + inset], b2 = [ex + nx * half + insetx, ey + ny * half + inset];
+    const ns = 'http://www.w3.org/2000/svg';
+    if (kind === 'think') {
+      for (let i = 1; i <= 3; i++) { const c = document.createElementNS(ns, 'circle'); c.setAttribute('cx', ex + ux * len * i / 3.2); c.setAttribute('cy', ey + uy * len * i / 3.2); c.setAttribute('r', 5 - i); c.setAttribute('fill', '#f3f0ff'); c.setAttribute('stroke', '#5a4e8a'); c.setAttribute('stroke-width', 1.5); svg.appendChild(c); }
+      continue;
+    }
+    const fill = document.createElementNS(ns, 'path');
+    fill.setAttribute('d', `M${a} L${px},${py} L${b2} Z`);
+    fill.setAttribute('fill', getComputedStyle(e).backgroundColor);
+    const line = document.createElementNS(ns, 'path');
+    line.setAttribute('d', `M${a[0] - insetx * .3},${a[1] - inset} L${px},${py} L${b2[0] - insetx * .3},${b2[1] - inset}`);
+    line.setAttribute('fill', 'none'); line.setAttribute('stroke', getComputedStyle(e).borderTopColor);
+    line.setAttribute('stroke-width', kind === 'shout' ? 3 : 2); line.setAttribute('stroke-linejoin', 'round');
+    if (kind === 'whisper') line.setAttribute('stroke-dasharray', '5 4');
+    svg.appendChild(fill); svg.appendChild(line);
+    e.style.zIndex = 1; svg.style.zIndex = 2;
+  }
+}
+function layoutAll() { for (const f of strip.querySelectorAll('figure.pn')) layoutFig(f); }
+
+function open(n, scrollTop) {
+  if (!C.chapters[n]) return;
+  current = n; buildNav();
+  try { localStorage.setItem('ht-chapter', String(n)); } catch (e) {}
+  const ch = C.chapters[n];
+  strip.textContent = '';
+  const head = el('section', 'card');
+  head.appendChild(el('div', 'kicker', 'Глава ' + n));
+  head.appendChild(el('div', 'title', ch.title || ''));
+  if (ch.cover) strip.appendChild(panelEl(ch.cover));
+  strip.appendChild(head);
+  ch.scenes.forEach((sc, i) => {
+    const s = el('section', 'card scene');
+    s.appendChild(el('div', 'kicker', 'Сцена ' + (sc.n || i + 1)));
+    s.appendChild(el('div', 'title', sc.title));
+    strip.appendChild(s);
+    for (const p of sc.panels) strip.appendChild(panelEl(p));
+  });
+  const end = el('section', 'card end');
+  end.appendChild(el('div', 'kicker', 'Конец главы ' + n));
+  if (C.chapters[n + 1]) {
+    const b = el('button', 'go', 'Глава ' + (n + 1) + ' →'); b.type = 'button';
+    b.addEventListener('click', () => open(n + 1, true)); end.appendChild(b);
+  } else end.appendChild(el('p', null, 'Следующая глава скоро будет здесь.'));
+  strip.appendChild(end);
+  if (io) io.disconnect();
+  io = new IntersectionObserver(es => { for (const e of es) if (e.isIntersecting) { paint(e.target); io.unobserve(e.target); } }, { rootMargin: '1200px 0px' });
+  for (const f of strip.querySelectorAll('figure.pn')) io.observe(f);
+  requestAnimationFrame(layoutAll);
+  if (scrollTop) window.scrollTo({ top: 0 });
+}
+
+let rt = 0;
+window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layoutAll, 120); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutAll);
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - innerHeight;
+  document.getElementById('bar').style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+}, { passive: true });
+
+let start = 1;
+try { const s = +localStorage.getItem('ht-chapter'); if (C.chapters[s]) start = s; } catch (e) {}
+const hash = location.hash.match(/^#ch(\d)$/);
+if (hash && C.chapters[+hash[1]]) start = +hash[1];
+open(start, false);
+})();
+</script>
