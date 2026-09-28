@@ -1,0 +1,50 @@
+
+<div id="app">
+  <div id="stage" aria-label="Анимированный комикс. Нажми справа, чтобы листать вперёд, слева — назад.">
+    <div id="scene"></div>
+    <canvas id="fx" aria-hidden="true"></canvas>
+    <svg id="overlay" viewBox="0 0 900 1600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs id="ovDefs"></defs><g id="ovG"></g></svg>
+    <div id="danger"></div>
+    <div id="flash"></div>
+    <div id="vignette"></div>
+    <div id="grain"></div>
+    <div id="ui" aria-hidden="true"></div>
+    <svg id="tails" aria-hidden="true"></svg>
+    <div id="fade"></div>
+    <p id="live" class="sr" aria-live="polite"></p>
+
+    <div id="hud">
+      <div id="prog"><div id="bar"><i></i></div><div id="where">Глава 3 · Площадка</div></div>
+      <div id="btns">
+        <button class="ibtn" id="bAuto" type="button" aria-pressed="false" aria-label="Автопросмотр">
+          <svg class="on" viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></svg>
+          <svg class="off" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg>
+        </button>
+        <button class="ibtn" id="bSound" type="button" aria-pressed="true" aria-label="Звук">
+          <svg class="on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+          <svg class="off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM17 9l5 6M22 9l-5 6"/></svg>
+        </button>
+      </div>
+    </div>
+    <p id="hint">нажимай справа — дальше, слева — назад</p>
+
+    <section id="intro" class="card" aria-labelledby="introTitle">
+      <p class="eyebrow">глава 3 · первая встреча</p>
+      <h1 id="introTitle"><span class="a">Хината</span> и <span class="b">Цукико</span></h1>
+      <p class="lead">Суббота, половина десятого вечера. Холодно, изо рта идёт пар. Детская площадка между двумя домами и один гудящий фонарь.</p>
+      <div class="row">
+        <button class="btn primary" id="bStart" type="button"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg>Смотреть</button>
+      </div>
+      <p class="small">Со звуком атмосфернее. Если телефон на беззвучном, звука не будет.</p>
+    </section>
+
+    <section id="outro" class="card gone" aria-labelledby="outroTitle" hidden>
+      <p class="eyebrow">продолжение следует</p>
+      <h2 id="outroTitle">Воскресенье, семь вечера</h2>
+      <p class="lead">Придёт ли Банка на площадку? Следующая сцена — в следующей серии.</p>
+      <div class="row">
+        <button class="btn primary" id="bAgain" type="button">Смотреть сначала</button>
+      </div>
+    </section>
+  </div>
+</div>
